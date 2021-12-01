@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 # To do list
@@ -13,3 +13,6 @@ class Todo(models.Model):
     # One user can have many todos
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    # Return own name
+    def __str__(self):
+        return self.title
