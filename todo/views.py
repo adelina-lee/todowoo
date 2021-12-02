@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, \
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from .forms import TodoForm
 
 
 def home(request):
@@ -65,3 +66,11 @@ def logoutuser(request):
 
 def current(request):
     return render(request, 'todo/current.html')
+
+
+def create(request):
+    if request.method == 'GET':
+        return render(request, 'todo/create.html',
+                      {'form': TodoForm()})
+    else:
+        pass
