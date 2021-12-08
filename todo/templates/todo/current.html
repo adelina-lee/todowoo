@@ -9,7 +9,20 @@
 </head>
 <body>
     {% csrf_token %}
-        <h1>Current Todos</h1>
+    <h1>Current Todos</h1>
+
+    <ul>
+        {% for todo in todos %}
+        <li>{% if todo.important %}<b>{% endif %}
+            {{ todo.title }} {# title #}
+            {% if todo.important %}</b>{% endif %}
+
+            {% if todo.memo %}
+                - {{ todo.memo }} {# memo #}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
 

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
+from .models import Todo
 
 
 def home(request):
@@ -64,13 +65,24 @@ def logoutuser(request):
         return redirect('home')
 
 
-def current(request):
-    return render(request, 'todo/current.html')
-
-
 def create(request):
     if request.method == 'GET':
         return render(request, 'todo/create.html',
                       {'form': TodoForm()})
     else:
-        pass
+        try:
+            form = TodoForm(request.POST)  # whatever sent will be passed here
+            newtodo = form.save(commit=False)
+            newtodo.user = request.user
+            newtodo.save()
+            return redirect('current')
+        except ValueError:
+            return render(request, 'todo/create.html',
+                          {'form': TodoForm(),
+                           'error': 'Bad data passed. Try again.'})
+
+
+def current(request):
+    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True)
+    return render(request, 'todo/current.html',
+                  {'todos': todos})
