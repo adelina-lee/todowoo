@@ -13,14 +13,18 @@
 
     <ul>
         {% for todo in todos %}
-        <li>{% if todo.important %}<b>{% endif %}
-            {{ todo.title }} {# title #}
-            {% if todo.important %}</b>{% endif %}
-
-            {% if todo.memo %}
-                - {{ todo.memo }} {# memo #}
-            {% endif %}
-        </li>
+                <li>
+                    {# To-do Title #}
+                    <a href="{% url 'view' todo.id %}">
+                    {% if todo.important %}<b>{% endif %}
+                        {{ todo.title }} {# title #}
+                    {% if todo.important %}</b>{% endif %}
+                    </a>
+                    {# To-do Memo #}
+                    {% if todo.memo %}
+                        - {{ todo.memo }} {# memo #}
+                    {% endif %}
+                </li>
         {% endfor %}
     </ul>
 </body>

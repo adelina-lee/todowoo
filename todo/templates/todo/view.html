@@ -8,8 +8,25 @@
     <title>Title</title>
 </head>
 <body>
-    {% csrf_token %}
-        <h1>{{ todo.title }}</h1>
+    {{ error }}
+
+    <h1>{{ todo.title }}</h1>
+
+    <form method="POST"> {# POST - will GET information from the form and then POST it #}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+    <form method="POST" action="{% url 'complete' todo.id %}">
+        {% csrf_token %}
+        <button type="submit">Complete</button>
+    </form>
+
+    <form method="POST" action="{% url 'delete' todo.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
 </body>
 </html>
 
