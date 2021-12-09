@@ -125,3 +125,9 @@ def delete(request, todo_pk):
     if request.method == 'POST':
         todo.delete()  # save object
         return redirect('current')
+
+
+def completed(request):
+    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
+    return render(request, 'todo/completed.html',
+                  {'todos': todos})

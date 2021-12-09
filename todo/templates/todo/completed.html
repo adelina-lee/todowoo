@@ -1,0 +1,34 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% csrf_token %}
+    <h1>Completed Todos</h1>
+
+    <ul>
+        {% for todo in todos %}
+                <li>
+                    {# To-do Title #}
+                    <a href="{% url 'completed' %}">
+                    {% if todo.important %}<b>{% endif %}
+                        {{ todo.title }} {# title #}
+                    {% if todo.important %}</b>{% endif %}
+                    </a>
+                    {# To-do Memo #}
+                    {% if todo.memo %}
+                        - {{ todo.memo }} {# memo #}
+                    {% endif %}
+                    Date completed: {{ todo.datecompleted|date:'j M Y H:i' }}
+                </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+{% endblock %}
